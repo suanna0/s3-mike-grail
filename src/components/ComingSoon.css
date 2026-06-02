@@ -1,0 +1,29 @@
+.coming-soon {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.coming-soon__text {
+  position: relative;
+  z-index: 1;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: #fff;
+  text-transform: uppercase;
+}
