@@ -5,8 +5,9 @@ const LAUNCH_DATE = new Date('2026-07-01T00:00:00')
 
 function App() {
   const isLaunched = new Date() >= LAUNCH_DATE
+  const isPreview = new URLSearchParams(window.location.search).has('preview')
 
-  return isLaunched ? <Site /> : <ComingSoon />
+  return isLaunched || isPreview ? <Site /> : <ComingSoon />
 }
 
 export default App

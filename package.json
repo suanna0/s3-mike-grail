@@ -22,6 +22,7 @@
   "homepage": "https://github.com/suanna0/s3-mike-grail#readme",
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.2",
+    "gsap": "^3.15.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "vite": "^8.0.16"

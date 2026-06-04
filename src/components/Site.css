@@ -1,10 +1,149 @@
-.site {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 2rem;
+/* ── Shared grid ───────────────────────────────────────── */
+.hero,
+.meta,
+.products__labels,
+.products__grid {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.site img {
+/* ── Hero ──────────────────────────────────────────────── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+/* ── Feature image ─────────────────────────────────────── */
+.feature {
+  position: relative;
+}
+
+.feature__img-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #c8c8c8;
+  display: block;
+}
+
+.feature img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.feature__overlay {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  text-align: left;
+  pointer-events: none;
+}
+
+.feature__overlay p {
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* ── Sticky header (meta + labels) ────────────────────── */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #efefef;
+}
+
+/* ── Meta bar ──────────────────────────────────────────── */
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.meta__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meta__help {
+  width: 28px;
+  height: 28px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Products ──────────────────────────────────────────── */
+.products__labels {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.products__label-col {
+  grid-column: span 2;
+}
+
+.products__label-col p {
+  line-height: 1.4;
+}
+
+.products__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+/* 2 images per row, spanning cols 1–4; cols 5–6 stay empty */
+.products__img,
+.products__img-placeholder {
+  grid-column: span 2;
+  aspect-ratio: 1;
+  width: 100%;
+  display: block;
+}
+
+.products__img-placeholder {
+  background: #d8d8d8;
+}
+
+/* Force wrap after 2nd item per row by pinning odd items to col 1 */
+.products__grid > *:nth-child(odd)  { grid-column: 1 / span 2; }
+.products__grid > *:nth-child(even) { grid-column: 3 / span 2; }
+
+/* ── Footer ────────────────────────────────────────────── */
+.footer {
+  margin-top: 60px;
+}
+
+.footer__top {
+  display: block;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer__img-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  background: #b8c4cc;
+  display: block;
+}
+
+.footer img {
   width: 100%;
   height: auto;
   display: block;
