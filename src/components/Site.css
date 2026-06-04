@@ -1,7 +1,6 @@
 /* ── Shared grid ───────────────────────────────────────── */
 .hero,
-.meta,
-.products__labels,
+.sticky-header,
 .products__grid {
   padding-left: 20px;
   padding-right: 20px;
@@ -12,41 +11,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
+  height: 100vh;
 }
 
-/* ── Feature image ─────────────────────────────────────── */
-.feature {
-  position: relative;
-}
-
-.feature__img-placeholder {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #c8c8c8;
-  display: block;
-}
-
-.feature img {
+.feature__video {
   width: 100%;
   height: auto;
   display: block;
 }
 
-.feature__overlay {
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-align: left;
-  pointer-events: none;
-}
-
-.feature__overlay p {
-  color: #fff;
-  line-height: 1.4;
-}
 
 /* ── Sticky header (meta + labels) ────────────────────── */
 .sticky-header {
@@ -89,8 +62,15 @@
   overflow: hidden;
 }
 
-.meta > .caption:last-child {
+.meta__hover-label {
   grid-column: 5 / span 2;
+  height: 0;
+  overflow: visible;
+}
+
+.meta__hover-label .caption {
+  display: block;
+  white-space: pre-wrap;
 }
 
 /* ── Products ──────────────────────────────────────────── */
