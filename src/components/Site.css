@@ -54,6 +54,7 @@
   top: 0;
   z-index: 10;
   background: #efefef;
+  padding-bottom: 10px;
 }
 
 /* ── Meta bar ──────────────────────────────────────────── */
@@ -63,7 +64,6 @@
   gap: 10px;
   align-items: start;
   padding-top: 10px;
-  padding-bottom: 0;
   overflow: visible;
 }
 
@@ -98,7 +98,6 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  margin-bottom: 10px;
   overflow: hidden;
 }
 
@@ -116,10 +115,23 @@
   gap: 10px;
 }
 
-/* 2 images per row, spanning cols 1–4; cols 5–6 stay empty */
+/* 2 items per row, spanning cols 1–4; cols 5–6 stay empty */
+.products__grid > *:nth-child(odd)  { grid-column: 1 / span 2; }
+.products__grid > *:nth-child(even) { grid-column: 3 / span 2; }
+
+.products__item {
+  position: relative;
+}
+
+.products__item figcaption {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #000;
+}
+
 .products__img,
 .products__img-placeholder {
-  grid-column: span 2;
   aspect-ratio: 1;
   width: 100%;
   display: block;
@@ -128,10 +140,6 @@
 .products__img-placeholder {
   background: #d8d8d8;
 }
-
-/* Force wrap after 2nd item per row by pinning odd items to col 1 */
-.products__grid > *:nth-child(odd)  { grid-column: 1 / span 2; }
-.products__grid > *:nth-child(even) { grid-column: 3 / span 2; }
 
 /* ── Footer ────────────────────────────────────────────── */
 .footer {

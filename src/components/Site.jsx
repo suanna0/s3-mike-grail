@@ -12,12 +12,12 @@ const LABEL_COLS = [
 
 // Placeholder product images — swap in real srcs when available
 const PRODUCT_IMAGES = [
-  { src: null, alt: 'Look 1' },
-  { src: null, alt: 'Look 2' },
-  { src: null, alt: 'Look 3' },
-  { src: null, alt: 'Look 4' },
-  { src: null, alt: 'Look 5' },
-  { src: null, alt: 'Look 6' },
+  { src: null, alt: 'Look 1', label: 'Look 1' },
+  { src: null, alt: 'Look 2', label: 'Look 2' },
+  { src: null, alt: 'Look 3', label: 'Look 3' },
+  { src: null, alt: 'Look 4', label: 'Look 4' },
+  { src: null, alt: 'Look 5', label: 'Look 5' },
+  { src: null, alt: 'Look 6', label: 'Look 6' },
 ]
 
 function Site() {
@@ -96,11 +96,15 @@ function Site() {
 
       {/* ── Product image grid ────────────────────── */}
       <div className="products__grid">
-        {PRODUCT_IMAGES.map((img, i) =>
-          img.src
-            ? <OptimizedImage key={i} className="products__img" src={img.src} alt={img.alt} width={600} height={600} />
-            : <div key={i} className="products__img-placeholder" aria-label={img.alt} />
-        )}
+        {PRODUCT_IMAGES.map((img, i) => (
+          <figure key={i} className="products__item">
+            {img.src
+              ? <OptimizedImage className="products__img" src={img.src} alt={img.alt} width={600} height={600} />
+              : <div className="products__img-placeholder" aria-hidden="true" />
+            }
+            <figcaption className="caption">{img.label}</figcaption>
+          </figure>
+        ))}
       </div>
 
       {/* ── Footer ───────────────────────────────── */}
