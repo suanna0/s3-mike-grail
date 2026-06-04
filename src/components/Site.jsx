@@ -1,7 +1,10 @@
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import OptimizedImage from './OptimizedImage'
 import './Site.css'
 
 const LABEL_COLS = [
+  ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
   ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
   ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
   ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
@@ -18,6 +21,45 @@ const PRODUCT_IMAGES = [
 ]
 
 function Site() {
+  const aboutRef = useRef(null)
+  const aboutLabelRef = useRef(null)
+  const labelsRef = useRef(null)
+
+  useEffect(() => {
+    const btn = aboutRef.current
+    const label = aboutLabelRef.current
+    const labels = labelsRef.current
+
+    const labelsHeight = labels.offsetHeight
+
+    function onEnter() {
+      const size = labels.children[0].offsetWidth
+      // Phase 1: fade labels out (keep height so header stays at labels height)
+      gsap.to(labels, { opacity: 0, duration: 0.25, ease: 'none' })
+      // Phase 2: collapse labels height + expand rectangle simultaneously
+      gsap.to(labels, { height: 0, duration: 0.25, delay: 0.25, ease: 'none' })
+      gsap.to(btn, { width: size, height: size, duration: 0.25, delay: 0.25, ease: 'none' })
+      gsap.to(label, { opacity: 0, duration: 0.25, delay: 0.25, ease: 'none' })
+    }
+
+    function onLeave() {
+      // Phase 1: shrink rectangle + restore labels height simultaneously
+      gsap.to(btn, { width: 28, height: 28, duration: 0.25, ease: 'none' })
+      gsap.to(labels, { height: labelsHeight, duration: 0.25, ease: 'none' })
+      // Phase 2: fade labels back in
+      gsap.to(label, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
+      gsap.to(labels, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
+    }
+
+    btn.addEventListener('mouseenter', onEnter)
+    btn.addEventListener('mouseleave', onLeave)
+
+    return () => {
+      btn.removeEventListener('mouseenter', onEnter)
+      btn.removeEventListener('mouseleave', onLeave)
+    }
+  }, [])
+
   return (
     <main className="site">
 
@@ -28,7 +70,6 @@ function Site() {
 
       {/* ── Feature image ────────────────────────── */}
       <div className="feature">
-        {/* swap src/width/height once asset is available */}
         <div className="feature__img-placeholder" aria-hidden="true" />
         <div className="feature__overlay">
           <p>MYWWO NOC QKBBYXC</p>
@@ -41,12 +82,10 @@ function Site() {
       <div className="sticky-header">
         <div className="meta">
           <span className="caption">MIKE GRAIL</span>
-          <div className="meta__right">
-            <button className="meta__help" aria-label="Help">?</button>
-            <span className="caption">Hover on images</span>
-          </div>
+          <button ref={aboutRef} className="meta__about" aria-label="About"><span ref={aboutLabelRef}>?</span></button>
+          <span className="caption">Hover on images</span>
         </div>
-        <div className="products__labels">
+        <div ref={labelsRef} className="products__labels">
           {LABEL_COLS.map((col, ci) => (
             <div key={ci} className="products__label-col">
               {col.map(brand => <p key={brand}>{brand}</p>)}
