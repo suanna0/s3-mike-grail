@@ -5,17 +5,14 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 gsap.registerPlugin(ScrollToPlugin)
 import OptimizedImage from './OptimizedImage'
 import './Site.css'
+import LABELS from '../data/labels'
+import PRODUCT_IMAGES from '../data/products'
 
 const ABOUT_TEXT = `Hi, I'm Michael.
 
 I have always had an eye for beautiful things - whether they be incredible moments of design history, laboriously handcrafted garments, extraordinary natural phenomena, or just plain everyday objects.
 
 In a world of fast moving trends and overconsumption, I am working to be more intentional about what I collect, investing in lifelong pieces that I know I will cherish forever. Updating this website periodically not only is a small nod to this shift in attitude but also serves as a way to look back on the stories each piece holds.`
-
-const LABELS = [
-  'COMME des GARÇONS', 'Gentle Monster', 'Guidi', 'Kapital',
-  'Little Tokyo Table Tennis', 'Maison Margiela', 'Needles', 'Suanna Zhong', 'Taiga Takahashi',
-]
 
 const COL_SIZE = 3
 const LABEL_COLS = (() => {
@@ -26,19 +23,19 @@ const LABEL_COLS = (() => {
   return cols
 })()
 
-// Placeholder product images — swap in real srcs when available
-const PRODUCT_IMAGES = [
-  { src: null, alt: 'Look 1', label: 'Look 1' },
-  { src: null, alt: 'Look 2', label: 'Look 2' },
-  { src: null, alt: 'Look 3', label: 'Look 3' },
-  { src: null, alt: 'Look 4', label: 'Look 4' },
-  { src: null, alt: 'Look 5', label: 'Look 5' },
-  { src: null, alt: 'Look 6', label: 'Look 6' },
-]
 
 function Site() {
   const [hoverLabel, setHoverLabel] = useState('Hover on images')
   const [isHovering, setIsHovering] = useState(false)
+  const [selectedBrand, setSelectedBrand] = useState(null)
+
+  const visibleProducts = selectedBrand
+    ? PRODUCT_IMAGES.filter(p => p.brand === selectedBrand)
+    : PRODUCT_IMAGES
+
+  function toggleBrand(brand) {
+    setSelectedBrand(prev => prev === brand ? null : brand)
+  }
 
   const aboutRef = useRef(null)
   const aboutLabelRef = useRef(null)
@@ -114,7 +111,7 @@ function Site() {
       {/* ── Meta bar + Labels (sticky together) ─────── */}
       <div className="sticky-header">
         <div className="meta">
-          <span className="caption">MIKE GRAIL</span>
+          <span className="caption mike-grail-label" onClick={() => setSelectedBrand(null)}>MIKE GRAIL</span>
           <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => changeLabel(ABOUT_TEXT, true, 0.4, 0.25)} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef}>?</span></button>
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
@@ -123,7 +120,13 @@ function Site() {
         <div ref={labelsRef} className="products__labels">
           {LABEL_COLS.map((col, ci) => (
             <div key={ci} className="products__label-col">
-              {col.map(brand => <p key={brand}>{brand}</p>)}
+              {col.map(brand => (
+                <p
+                  key={brand}
+                  className={selectedBrand === brand ? 'brand-label brand-label--selected' : selectedBrand ? 'brand-label brand-label--dim' : 'brand-label'}
+                  onClick={() => toggleBrand(brand)}
+                >{brand}</p>
+              ))}
             </div>
           ))}
         </div>
@@ -131,7 +134,7 @@ function Site() {
 
       {/* ── Product image grid ────────────────────── */}
       <div className="products__grid">
-        {PRODUCT_IMAGES.map((img, i) => (
+        {visibleProducts.map((img, i) => (
           <figure
             key={i}
             className="products__item"

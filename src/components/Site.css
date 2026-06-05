@@ -89,6 +89,23 @@
   line-height: 1.4;
 }
 
+.brand-label,
+.mike-grail-label {
+  cursor: pointer;
+}
+
+.mike-grail-label:hover,
+.brand-label:hover {
+  text-decoration: underline;
+}
+
+.brand-label--dim {
+}
+
+.brand-label--selected {
+  text-decoration: underline;
+}
+
 .products__grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
