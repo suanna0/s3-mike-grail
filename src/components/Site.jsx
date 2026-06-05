@@ -35,14 +35,14 @@ function Site() {
   const labelsRef = useRef(null)
   const hoverLabelRef = useRef(null)
 
-  function changeLabel(text, hovering) {
+  function changeLabel(text, hovering, fadeInDelay = 0, fadeInDuration = 0.15) {
     const el = hoverLabelRef.current
     gsap.to(el, {
       opacity: 0, duration: 0.15, ease: 'none',
       onComplete: () => {
         setHoverLabel(text)
         setIsHovering(hovering)
-        gsap.to(el, { opacity: 1, duration: 0.15, ease: 'none' })
+        gsap.to(el, { opacity: 1, duration: fadeInDuration, delay: fadeInDelay, ease: 'none' })
       }
     })
   }
@@ -105,7 +105,7 @@ function Site() {
       <div className="sticky-header">
         <div className="meta">
           <span className="caption">MIKE GRAIL</span>
-          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => changeLabel(ABOUT_TEXT, true)} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef}>?</span></button>
+          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => changeLabel(ABOUT_TEXT, true, 0.4, 0.25)} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef}>?</span></button>
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
           </div>
@@ -125,8 +125,8 @@ function Site() {
           <figure
             key={i}
             className="products__item"
-            onMouseEnter={() => changeLabel(img.label, true)}
-            onMouseLeave={() => changeLabel('Hover on images', false)}
+            onMouseEnter={() => { setHoverLabel(img.label); setIsHovering(true) }}
+            onMouseLeave={() => { setHoverLabel('Hover on images'); setIsHovering(false) }}
           >
             {img.src
               ? <OptimizedImage className="products__img" src={img.src} alt={img.alt} width={600} height={600} />
