@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+
+gsap.registerPlugin(ScrollToPlugin)
 import OptimizedImage from './OptimizedImage'
 import './Site.css'
 
@@ -9,12 +12,19 @@ I have always had an eye for beautiful things - whether they be incredible momen
 
 In a world of fast moving trends and overconsumption, I am working to be more intentional about what I collect, investing in lifelong pieces that I know I will cherish forever. Updating this website periodically not only is a small nod to this shift in attitude but also serves as a way to look back on the stories each piece holds.`
 
-const LABEL_COLS = [
-  ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
-  ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
-  ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
-  ['KAPITAL (3)', 'GENTLE MONSTER', 'COMME DES GARCONS', 'NEEDLES'],
+const LABELS = [
+  'COMME des GARÇONS', 'Gentle Monster', 'Guidi', 'Kapital',
+  'Little Tokyo Table Tennis', 'Maison Margiela', 'Needles', 'Suanna Zhong', 'Taiga Takahashi',
 ]
+
+const COL_SIZE = 3
+const LABEL_COLS = (() => {
+  const cols = []
+  for (let i = 0; i < LABELS.length; i += COL_SIZE) {
+    cols.push(LABELS.slice(i, i + COL_SIZE))
+  }
+  return cols
+})()
 
 // Placeholder product images — swap in real srcs when available
 const PRODUCT_IMAGES = [
@@ -132,14 +142,20 @@ function Site() {
               ? <OptimizedImage className="products__img" src={img.src} alt={img.alt} width={600} height={600} />
               : <div className="products__img-placeholder" aria-hidden="true" />
             }
-            <figcaption className="caption">{img.label}</figcaption>
           </figure>
         ))}
       </div>
 
       {/* ── Footer ───────────────────────────────── */}
       <footer className="footer">
-        <a className="footer__top caption" href="#top">back to top</a>
+        <a
+          className="footer__top caption"
+          href="#top"
+          onClick={e => {
+            e.preventDefault()
+            gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
+          }}
+        >back to top</a>
         <div className="footer__img-placeholder" aria-hidden="true" />
       </footer>
 
