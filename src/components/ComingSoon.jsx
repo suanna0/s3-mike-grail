@@ -106,6 +106,16 @@ function ComingSoon() {
         fetchpriority="high"
       />
       <span ref={textRef} className="coming-soon__text">{displayText}</span>
+      <footer className="coming-soon__footer">
+        <a
+          href="https://s2.mike-grail.com"
+          className="coming-soon__footer-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ← LAST SEASON
+        </a>
+      </footer>
     </div>
   )
 }
