@@ -44,6 +44,11 @@
   grid-column: 1 / span 3;
 }
 
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 .meta__about {
   grid-column: 4;
   margin-left: auto;
@@ -62,13 +67,23 @@
   overflow: hidden;
 }
 
+.meta__about span {
+  animation: blink 1s step-end infinite;
+}
+
+.about-label--gone {
+  visibility: hidden;
+  animation: none;
+}
+
 .meta__hover-label {
   grid-column: 5 / span 2;
   height: 0;
   overflow: visible;
+  font-size: 16px;
 }
 
-.meta__hover-label .caption {
+.meta__hover-label span {
   display: block;
   white-space: pre-wrap;
 }
@@ -121,7 +136,12 @@
 }
 
 
-.products__img,
+.products__img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .products__img-placeholder {
   aspect-ratio: 1;
   width: 100%;

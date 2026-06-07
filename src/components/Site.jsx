@@ -28,6 +28,8 @@ function Site() {
   const [hoverLabel, setHoverLabel] = useState('Hover on images')
   const [isHovering, setIsHovering] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState(null)
+  const [aboutHovered, setAboutHovered] = useState(false)
+  const labelsHeightRef = useRef(0)
 
   const visibleProducts = selectedBrand
     ? PRODUCT_IMAGES.filter(p => p.brand === selectedBrand)
@@ -60,22 +62,19 @@ function Site() {
     const labels = labelsRef.current
 
     const labelsHeight = labels.offsetHeight
+    labelsHeightRef.current = labelsHeight
 
     function onEnter() {
       const size = labels.children[0].offsetWidth
-      // Phase 1: fade labels out (keep height so header stays at labels height)
       gsap.to(labels, { opacity: 0, duration: 0.25, ease: 'none' })
-      // Phase 2: collapse labels height + expand rectangle simultaneously
       gsap.to(labels, { height: 0, duration: 0.4, delay: 0.25, ease: 'power2.inOut' })
       gsap.to(btn, { width: size, height: size, duration: 0.4, delay: 0.25, ease: 'power2.inOut' })
       gsap.to(label, { opacity: 0, duration: 0.25, delay: 0.25, ease: 'none' })
     }
 
     function onLeave() {
-      // Phase 1: shrink rectangle + restore labels height simultaneously
       gsap.to(btn, { width: 28, height: 28, duration: 0.4, ease: 'power2.inOut' })
-      gsap.to(labels, { height: labelsHeight, duration: 0.4, ease: 'power2.inOut' })
-      // Phase 2: fade labels back in
+      gsap.to(labels, { height: labelsHeightRef.current, duration: 0.4, ease: 'power2.inOut' })
       gsap.to(label, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
       gsap.to(labels, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
     }
@@ -112,7 +111,7 @@ function Site() {
       <div className="sticky-header">
         <div className="meta">
           <span className="caption mike-grail-label" onClick={() => setSelectedBrand(null)}>MIKE GRAIL</span>
-          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => changeLabel(ABOUT_TEXT, true, 0.4, 0.25)} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef}>?</span></button>
+          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => { setAboutHovered(true); changeLabel(ABOUT_TEXT, true, 0.4, 0.25) }} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef} className={aboutHovered ? 'about-label--gone' : ''}>?</span></button>
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
           </div>
@@ -159,7 +158,7 @@ function Site() {
             gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
           }}
         >back to top</a>
-        <div className="footer__img-placeholder" aria-hidden="true" />
+        <img src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/footer.jpg" alt="" className="footer__img" />
       </footer>
 
     </main>
