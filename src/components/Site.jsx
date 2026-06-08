@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollToPlugin)
 import OptimizedImage from './OptimizedImage'
 import './Site.css'
 import LABELS from '../data/labels'
-import PRODUCT_IMAGES from '../data/products'
+import PRODUCT_IMAGES from '../data/products/index.js'
 
 const ABOUT_TEXT = `Hi, I'm Michael.
 
@@ -99,7 +99,7 @@ function Site() {
       {/* ── Feature video ────────────────────────── */}
       <video
         className="feature__video"
-        src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/bw.mp4"
+        src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/s3/bw.mp4"
         autoPlay
         muted
         loop
@@ -137,7 +137,7 @@ function Site() {
           <figure
             key={i}
             className="products__item"
-            onMouseEnter={() => { setHoverLabel(img.label); setIsHovering(true) }}
+            onMouseEnter={() => { setHoverLabel(img.caption ? `${img.name}\n\n${img.caption}` : img.name); setIsHovering(true) }}
             onMouseLeave={() => { setHoverLabel('Hover on images'); setIsHovering(false) }}
           >
             {img.src
@@ -146,6 +146,7 @@ function Site() {
             }
           </figure>
         ))}
+
       </div>
 
       {/* ── Footer ───────────────────────────────── */}

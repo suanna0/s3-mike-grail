@@ -135,7 +135,6 @@
   position: relative;
 }
 
-
 .products__img {
   width: 100%;
   height: auto;
@@ -146,9 +145,6 @@
   aspect-ratio: 1;
   width: 100%;
   display: block;
-}
-
-.products__img-placeholder {
   background: #d8d8d8;
 }
 
