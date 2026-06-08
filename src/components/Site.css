@@ -60,7 +60,7 @@
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +80,7 @@
   grid-column: 5 / span 2;
   height: 0;
   overflow: visible;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .meta__hover-label span {
