@@ -3,7 +3,6 @@ import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 gsap.registerPlugin(ScrollToPlugin)
-import OptimizedImage from './OptimizedImage'
 import './Site.css'
 import LABELS from '../data/labels'
 import PRODUCT_IMAGES from '../data/products/index.js'
@@ -24,12 +23,14 @@ const LABEL_COLS = (() => {
 })()
 
 
+
 function ProductItem({ img, onMouseEnter, onMouseLeave }) {
   const multi = img.images.length > 1
   const aRef = useRef(null)
   const bRef = useRef(null)
   const stateRef = useRef({ front: 'a', index: 0 })
   const intervalRef = useRef(null)
+  const hasCycledRef = useRef(false)
 
   function cycle() {
     const { front, index } = stateRef.current
@@ -38,25 +39,26 @@ function ProductItem({ img, onMouseEnter, onMouseLeave }) {
     const backEl  = front === 'a' ? bRef.current : aRef.current
     const nextSrc = img.images[nextIndex]
 
-    function doFade() {
+    function doJump() {
       backEl.onload = null
-      gsap.to(frontEl, { opacity: 0, duration: 0.5, ease: 'none' })
-      gsap.to(backEl,  { opacity: 1, duration: 0.5, ease: 'none' })
+      gsap.killTweensOf([frontEl, backEl])
+      gsap.set(frontEl, { opacity: 0 })
+      gsap.set(backEl,  { opacity: 1 })
       stateRef.current = { front: front === 'a' ? 'b' : 'a', index: nextIndex }
+      hasCycledRef.current = true
     }
 
     backEl.src = nextSrc
     if (backEl.complete) {
-      doFade()
+      doJump()
     } else {
-      backEl.onload = doFade
+      backEl.onload = doJump
     }
   }
 
   function startCycling() {
     if (!multi) return
-    cycle()
-    intervalRef.current = setInterval(cycle, 2000)
+    intervalRef.current = setInterval(cycle, 650)
   }
 
   function stopCycling() {
@@ -64,8 +66,11 @@ function ProductItem({ img, onMouseEnter, onMouseLeave }) {
     clearInterval(intervalRef.current)
     aRef.current.onload = null
     bRef.current.onload = null
+    if (!hasCycledRef.current) return
+    hasCycledRef.current = false
     gsap.killTweensOf([aRef.current, bRef.current])
-    const { front } = stateRef.current
+    const { front, index } = stateRef.current
+    if (index === 0) return
     const frontEl = front === 'a' ? aRef.current : bRef.current
     const backEl  = front === 'a' ? bRef.current : aRef.current
     backEl.src = img.images[0]
@@ -166,7 +171,7 @@ function Site() {
       {/* ── Feature video ────────────────────────── */}
       <video
         className="feature__video"
-        src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/s3/bw.mp4"
+        src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/s3/feature.mp4"
         autoPlay
         muted
         loop
