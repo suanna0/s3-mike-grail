@@ -1,5 +1,8 @@
 export default {
-  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/orange_asics_main.jpg'],
+  images: [
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/orange_asics_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/orange_asics_detail.jpg'
+  ],
   alt: 'LTTT ASICS Training Pant - Orange',
   name: 'LTTT ASICS Training Pant - Orange',
   brand: 'Little Tokyo Table Tennis',
