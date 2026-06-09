@@ -24,6 +24,73 @@ const LABEL_COLS = (() => {
 })()
 
 
+function ProductItem({ img, onMouseEnter, onMouseLeave }) {
+  const multi = img.images.length > 1
+  const aRef = useRef(null)
+  const bRef = useRef(null)
+  const stateRef = useRef({ front: 'a', index: 0 })
+  const intervalRef = useRef(null)
+
+  function cycle() {
+    const { front, index } = stateRef.current
+    const nextIndex = (index + 1) % img.images.length
+    const frontEl = front === 'a' ? aRef.current : bRef.current
+    const backEl  = front === 'a' ? bRef.current : aRef.current
+    const nextSrc = img.images[nextIndex]
+
+    function doFade() {
+      backEl.onload = null
+      gsap.to(frontEl, { opacity: 0, duration: 0.5, ease: 'none' })
+      gsap.to(backEl,  { opacity: 1, duration: 0.5, ease: 'none' })
+      stateRef.current = { front: front === 'a' ? 'b' : 'a', index: nextIndex }
+    }
+
+    backEl.src = nextSrc
+    if (backEl.complete) {
+      doFade()
+    } else {
+      backEl.onload = doFade
+    }
+  }
+
+  function startCycling() {
+    if (!multi) return
+    cycle()
+    intervalRef.current = setInterval(cycle, 2000)
+  }
+
+  function stopCycling() {
+    if (!multi) return
+    clearInterval(intervalRef.current)
+    aRef.current.onload = null
+    bRef.current.onload = null
+    gsap.killTweensOf([aRef.current, bRef.current])
+    const { front } = stateRef.current
+    const frontEl = front === 'a' ? aRef.current : bRef.current
+    const backEl  = front === 'a' ? bRef.current : aRef.current
+    backEl.src = img.images[0]
+    gsap.to(frontEl, { opacity: 0, duration: 0.5, ease: 'none' })
+    gsap.to(backEl,  { opacity: 1, duration: 0.5, ease: 'none' })
+    stateRef.current = { front: front === 'a' ? 'b' : 'a', index: 0 }
+  }
+
+  return (
+    <figure
+      className="products__item"
+      onMouseEnter={() => { startCycling(); onMouseEnter() }}
+      onMouseLeave={() => { stopCycling(); onMouseLeave() }}
+    >
+      {img.images.length > 0
+        ? <div className="products__img-wrap">
+            <img ref={bRef} className="products__img products__img--b" src={multi ? img.images[1] : img.images[0]} alt={img.alt} style={{ opacity: 0 }} />
+            <img ref={aRef} className="products__img products__img--a" src={img.images[0]} alt={img.alt} />
+          </div>
+        : <div className="products__img-placeholder" aria-hidden="true" />
+      }
+    </figure>
+  )
+}
+
 function Site() {
   const [hoverLabel, setHoverLabel] = useState('Hover on images')
   const [isHovering, setIsHovering] = useState(false)
@@ -134,17 +201,12 @@ function Site() {
       {/* ── Product image grid ────────────────────── */}
       <div className="products__grid">
         {visibleProducts.map((img, i) => (
-          <figure
+          <ProductItem
             key={i}
-            className="products__item"
+            img={img}
             onMouseEnter={() => { setHoverLabel(img.caption ? `${img.name}\n\n${img.caption}` : img.name); setIsHovering(true) }}
             onMouseLeave={() => { setHoverLabel('Hover on images'); setIsHovering(false) }}
-          >
-            {img.src
-              ? <OptimizedImage className="products__img" src={img.src} alt={img.alt} width={600} height={600} />
-              : <div className="products__img-placeholder" aria-hidden="true" />
-            }
-          </figure>
+          />
         ))}
 
       </div>
@@ -158,7 +220,7 @@ function Site() {
             e.preventDefault()
             gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
           }}
-        >back to top</a>
+        >BACK TO TOP</a>
         <img src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/footer.jpg" alt="" className="footer__img" />
       </footer>
 

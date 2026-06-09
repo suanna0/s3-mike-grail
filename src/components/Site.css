@@ -135,10 +135,22 @@
   position: relative;
 }
 
-.products__img {
+.products__img-wrap {
+  position: relative;
+}
+
+.products__img--a,
+.products__img--b {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
+}
+
+.products__img--b {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
 }
 
 .products__img-placeholder {
