@@ -46,6 +46,7 @@ function ProductItem({ img, onMouseEnter, onMouseLeave }) {
       gsap.set(backEl,  { opacity: 1 })
       stateRef.current = { front: front === 'a' ? 'b' : 'a', index: nextIndex }
       hasCycledRef.current = true
+      intervalRef.current = setTimeout(cycle, 650)
     }
 
     backEl.src = nextSrc
@@ -58,12 +59,12 @@ function ProductItem({ img, onMouseEnter, onMouseLeave }) {
 
   function startCycling() {
     if (!multi) return
-    intervalRef.current = setInterval(cycle, 650)
+    intervalRef.current = setTimeout(cycle, 650)
   }
 
   function stopCycling() {
     if (!multi) return
-    clearInterval(intervalRef.current)
+    clearTimeout(intervalRef.current)
     aRef.current.onload = null
     bRef.current.onload = null
     if (!hasCycledRef.current) return
