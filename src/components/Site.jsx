@@ -22,6 +22,11 @@ const LABEL_COLS = (() => {
   return cols
 })()
 
+const BRAND_COUNTS = PRODUCT_IMAGES.reduce((acc, p) => {
+  acc[p.brand] = (acc[p.brand] || 0) + 1
+  return acc
+}, {})
+
 
 
 function ProductItem({ img, onMouseEnter, onMouseLeave }) {
@@ -197,7 +202,7 @@ function Site() {
                   key={brand}
                   className={selectedBrand === brand ? 'brand-label brand-label--selected' : selectedBrand ? 'brand-label brand-label--dim' : 'brand-label'}
                   onClick={() => toggleBrand(brand)}
-                >{brand}</p>
+                >{brand}{selectedBrand === brand ? ` (${BRAND_COUNTS[brand] ?? 0})` : ''}</p>
               ))}
             </div>
           ))}
@@ -219,14 +224,30 @@ function Site() {
 
       {/* ── Footer ───────────────────────────────── */}
       <footer className="footer">
-        <a
-          className="footer__top caption"
-          href="#top"
-          onClick={e => {
-            e.preventDefault()
-            gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
-          }}
-        >BACK TO TOP</a>
+        <div className="footer__nav">
+          <a
+            className="footer__top caption"
+            href="#top"
+            onClick={e => {
+              e.preventDefault()
+              gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
+            }}
+          >BACK TO TOP</a>
+          <div className="footer__nav-bottom">
+            <a
+              href="https://s2.mike-grail.com"
+              className="footer__last-season caption"
+              target="_blank"
+              rel="noopener noreferrer"
+            >← LAST SEASON</a>
+            <a
+              href="https://www.instagram.com/michael__ry_/"
+              className="footer__instagram caption"
+              target="_blank"
+              rel="noopener noreferrer"
+            >INSTAGRAM →</a>
+          </div>
+        </div>
         <img src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/footer.jpg" alt="" className="footer__img" />
       </footer>
 

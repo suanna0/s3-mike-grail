@@ -162,16 +162,34 @@
   margin-top: 60px;
 }
 
-.footer__top {
-  display: block;
-  text-align: center;
+.footer__nav {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 10px;
+}
+
+.footer__nav-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer__top {
   text-decoration: none;
   color: inherit;
+  text-align: center;
+  padding-bottom: 4px;
 }
 
 .footer img {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.footer__last-season,
+.footer__instagram {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
 }
