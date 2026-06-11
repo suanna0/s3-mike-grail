@@ -43,8 +43,6 @@
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 12px;
-  letter-spacing: 0;
-  color: #000;
-  text-decoration: underline;
-  text-transform: lowercase;
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
 }

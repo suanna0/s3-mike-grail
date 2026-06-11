@@ -107,7 +107,9 @@ function Site() {
   const [isHovering, setIsHovering] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState(null)
   const [aboutHovered, setAboutHovered] = useState(false)
+  const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('mg_intro_seen'))
   const labelsHeightRef = useRef(0)
+  const introRef = useRef(null)
 
   const visibleProducts = selectedBrand
     ? PRODUCT_IMAGES.filter(p => p.brand === selectedBrand)
@@ -133,6 +135,17 @@ function Site() {
       }
     })
   }
+
+  useEffect(() => {
+    if (!showIntro) return
+    const overlay = introRef.current
+    gsap.to(overlay, { y: '-100%', duration: 0.7, ease: 'power2.inOut', delay: 1.5,
+      onComplete: () => {
+        localStorage.setItem('mg_intro_seen', '1')
+        setShowIntro(false)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     const btn = aboutRef.current
@@ -169,10 +182,12 @@ function Site() {
   return (
     <main className="site">
 
-      {/* ── Hero ─────────────────────────────────── */}
-      <section className="hero">
-        <h1>Mike Grail</h1>
-      </section>
+      {/* ── Intro overlay ────────────────────────── */}
+      {showIntro && (
+        <div ref={introRef} className="intro">
+          <p>Mike Grail</p>
+        </div>
+      )}
 
       {/* ── Feature video ────────────────────────── */}
       <video
