@@ -232,7 +232,7 @@ function Site() {
               e.preventDefault()
               gsap.to(window, { scrollTo: 0, duration: 1, ease: 'power2.inOut' })
             }}
-          >BACK TO TOP</a>
+          >BACK TO TOP ↑</a>
           <div className="footer__nav-bottom">
             <a
               href="https://s2.mike-grail.com"
