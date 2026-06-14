@@ -1,5 +1,5 @@
 export default {
-  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/cdg_detail.jpg'],
+  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/cdg_detail.jpg'],
   alt: 'Mystery CDG',
   name: 'Mystery CDG',
   brand: 'COMME des GARÇONS',

@@ -1,8 +1,8 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/plaid_ltttt_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/plaid_ltttt_detail.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/plaid_ltttt_detail_2.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/plaid_ltttt_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/plaid_ltttt_detail.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/plaid_ltttt_detail_2.jpg'
   ],
   alt: 'LTTT Bungee Pants V.3 - Black',
   name: 'LTTT Bungee Pants V.3 - Black',

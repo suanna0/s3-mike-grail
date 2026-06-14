@@ -1,7 +1,7 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/snufkin_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/snufkin_detail.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/snufkin_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/snufkin_detail.jpg'
   ],
   alt: 'Kapital No. 6 Canvas Snufkin Bag - Kinari',
   name: 'Kapital No. 6 Canvas Snufkin Bag - Kinari',

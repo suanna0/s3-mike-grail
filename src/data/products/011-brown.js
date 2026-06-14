@@ -1,8 +1,8 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/brown_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/brown_detail.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/brown_jump.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/brown_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/brown_detail.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/brown_jump.jpg'
   ],
   alt: 'Needles H.D. Track Pant - Poly Smooth Dark Brown',  
   name: 'Needles H.D. Track Pant - Poly Smooth Dark Brown',

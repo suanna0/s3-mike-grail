@@ -1,5 +1,5 @@
 export default {
-  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/yang_hat_main.jpg'],
+  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/yang_hat_main.jpg'],
   alt: 'Yang hat',
   name: 'Yang hat',
   brand: 'Suanna Zhong',

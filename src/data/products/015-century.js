@@ -1,7 +1,7 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/century_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/century_detail.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/century_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/century_detail.jpg'
   ],
   alt: 'Kapital Century Denim No.9 Book Bag',
   name: 'Kapital Century Denim No.9 Book Bag',

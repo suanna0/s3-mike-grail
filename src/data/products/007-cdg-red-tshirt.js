@@ -1,7 +1,7 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/cdg_red_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/cdg_red_detail.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/cdg_red_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/cdg_red_detail.jpg'
   ],
   alt: 'COMME des GARCONS Homme Plus Red Panelled T-Shirt',
   name: 'COMME des GARCONS Homme Plus Red Panelled T-Shirt',

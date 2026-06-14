@@ -1,5 +1,7 @@
 export default {
-  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/gentle_monster_main.jpg'],
+  images: ['https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/gentle_monster_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/gentle_monster_detail.jpg'
+  ],
   alt: 'Gentle Monster Lutto 01',
   name: 'Gentle Monster Lutto 01',
   brand: 'Gentle Monster',

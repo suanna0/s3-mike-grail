@@ -1,8 +1,8 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/type_i_main.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/type_i_detail.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/type_i_back.jpg'  
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/type_i_main.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/type_i_detail.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s1/type_i_back.jpg'  
   ],
   alt: 'Kapital Twill Aging-Wool 1st Jacket - Faded Charcoal',
   name: 'Kapital Twill Aging-Wool 1st Jacket - Faded Charcoal',

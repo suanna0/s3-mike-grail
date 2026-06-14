@@ -121,6 +121,7 @@ function Site() {
 
   const aboutRef = useRef(null)
   const aboutLabelRef = useRef(null)
+  const aboutImgRef = useRef(null)
   const labelsRef = useRef(null)
   const hoverLabelRef = useRef(null)
 
@@ -161,13 +162,15 @@ function Site() {
       gsap.to(labels, { height: 0, duration: 0.4, delay: 0.25, ease: 'power2.inOut' })
       gsap.to(btn, { width: size, height: size, duration: 0.4, delay: 0.25, ease: 'power2.inOut' })
       gsap.to(label, { opacity: 0, duration: 0.25, delay: 0.25, ease: 'none' })
+      gsap.to(aboutImgRef.current, { opacity: 1, duration: 0.1, delay: 0.25, ease: 'none' })
     }
 
     function onLeave() {
-      gsap.to(btn, { width: 28, height: 28, duration: 0.4, ease: 'power2.inOut' })
-      gsap.to(labels, { height: labelsHeightRef.current, duration: 0.4, ease: 'power2.inOut' })
-      gsap.to(label, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
-      gsap.to(labels, { opacity: 1, duration: 0.25, delay: 0.25, ease: 'none' })
+      gsap.to(aboutImgRef.current, { opacity: 0, duration: 0.2, ease: 'none' })
+      gsap.to(btn, { width: 28, height: 28, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+      gsap.to(labels, { height: labelsHeightRef.current, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+      gsap.to(label, { opacity: 1, duration: 0.25, delay: 0.35, ease: 'none' })
+      gsap.to(labels, { opacity: 1, duration: 0.25, delay: 0.35, ease: 'none' })
     }
 
     btn.addEventListener('mouseenter', onEnter)
@@ -206,7 +209,7 @@ function Site() {
       <div className="sticky-header">
         <div className="meta">
           <span className="caption mike-grail-label" onClick={() => setSelectedBrand(null)}>MIKE GRAIL</span>
-          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => { setAboutHovered(true); changeLabel(ABOUT_TEXT, true, 0.4, 0.25) }} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef} className={aboutHovered ? 'about-label--gone' : ''}>?</span></button>
+          <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => { setAboutHovered(true); changeLabel(ABOUT_TEXT, true, 0.4, 0.25) }} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef} className={aboutHovered ? 'about-label--gone' : ''}>?</span><img ref={aboutImgRef} src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/about.jpg" alt="" className="meta__about-img" style={{ opacity: 0 }} /></button>
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
           </div>

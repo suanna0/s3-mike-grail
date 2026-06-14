@@ -1,7 +1,7 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/kapital_grad_main.jpg', 
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/kapital_grad_detail.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/kapital_grad_main.jpg', 
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/kapital_grad_detail.jpg'
   ],
   alt: 'Kapital Kathmandu Patchwork Shirt',
   name: 'Kapital Kathmandu Patchwork Shirt',

@@ -1,7 +1,7 @@
 export default {
   images: [
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/tt_back.jpg',
-    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/tt_main.jpg'
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/tt_back.jpg',
+    'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s2/tt_main.jpg'
   ],
   alt: `Taiga Takahashi Lot. 704 Denim Trousers C. 1920's - Raw Indigo`,
   name: `Taiga Takahashi Lot. 704 Denim Trousers C. 1920's - Raw Indigo`,
