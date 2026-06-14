@@ -190,15 +190,17 @@ function Site() {
       )}
 
       {/* ── Feature video ────────────────────────── */}
-      <video
-        className="feature__video"
-        src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/s3/feature.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-      />
+      <div className="feature__container">
+        <video
+          className="feature__video"
+          src="https://de1wwae7728z6.cloudfront.net/videos/mike-grail/s3/feature.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+      </div>
 
       {/* ── Meta bar + Labels (sticky together) ─────── */}
       <div className="sticky-header">
