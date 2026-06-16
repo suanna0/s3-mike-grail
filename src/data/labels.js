@@ -1,4 +1,5 @@
 const LABELS = [
+  'Buzz Rickson',
   'COMME des GARÇONS',
   'Gentle Monster',
   'Guidi',

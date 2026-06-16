@@ -29,7 +29,7 @@ const BRAND_COUNTS = PRODUCT_IMAGES.reduce((acc, p) => {
 
 
 
-function ProductItem({ img, onMouseEnter, onMouseLeave }) {
+function ProductItem({ img, gridColumn, onMouseEnter, onMouseLeave }) {
   const multi = img.images.length > 1
   const aRef = useRef(null)
   const bRef = useRef(null)
@@ -88,6 +88,7 @@ function ProductItem({ img, onMouseEnter, onMouseLeave }) {
   return (
     <figure
       className="products__item"
+      style={{ gridColumn }}
       onMouseEnter={() => { startCycling(); onMouseEnter() }}
       onMouseLeave={() => { stopCycling(); onMouseLeave() }}
     >
@@ -231,15 +232,28 @@ function Site() {
 
       {/* ── Product image grid ────────────────────── */}
       <div className="products__grid">
-        {visibleProducts.map((img, i) => (
-          <ProductItem
-            key={i}
-            img={img}
-            onMouseEnter={() => { setHoverLabel(img.caption ? `${img.name}\n\n${img.caption}` : img.name); setIsHovering(true) }}
-            onMouseLeave={() => { setHoverLabel('Hover on images'); setIsHovering(false) }}
-          />
-        ))}
-
+        {(() => {
+          let col = 0
+          return visibleProducts.map((img, i) => {
+            let gridColumn
+            if (img.orientation === 'horizontal') {
+              gridColumn = '1 / span 4'
+              col = 0
+            } else {
+              gridColumn = col === 0 ? '1 / span 2' : '3 / span 2'
+              col = col === 0 ? 1 : 0
+            }
+            return (
+              <ProductItem
+                key={i}
+                img={img}
+                gridColumn={gridColumn}
+                onMouseEnter={() => { setHoverLabel(img.caption ? `${img.name}\n\n${img.caption}` : img.name); setIsHovering(true) }}
+                onMouseLeave={() => { setHoverLabel('Hover on images'); setIsHovering(false) }}
+              />
+            )
+          })
+        })()}
       </div>
 
       {/* ── Footer ───────────────────────────────── */}
