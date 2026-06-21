@@ -31,6 +31,7 @@ const BRAND_COUNTS = PRODUCT_IMAGES.reduce((acc, p) => {
 
 function ProductItem({ img, gridColumn, onMouseEnter, onMouseLeave }) {
   const multi = img.images.length > 1
+  const [mobileIndex, setMobileIndex] = useState(0)
   const aRef = useRef(null)
   const bRef = useRef(null)
   const stateRef = useRef({ front: 'a', index: 0 })
@@ -89,14 +90,23 @@ function ProductItem({ img, gridColumn, onMouseEnter, onMouseLeave }) {
     <figure
       className="products__item"
       style={{ gridColumn }}
-      onMouseEnter={() => { startCycling(); onMouseEnter() }}
-      onMouseLeave={() => { stopCycling(); onMouseLeave() }}
+      onMouseEnter={() => { if (window.innerWidth <= 768) return; startCycling(); onMouseEnter() }}
+      onMouseLeave={() => { if (window.innerWidth <= 768) return; stopCycling(); onMouseLeave() }}
     >
       {img.images.length > 0
-        ? <div className="products__img-wrap">
-            <img ref={bRef} className="products__img products__img--b" src={multi ? img.images[1] : img.images[0]} alt={img.alt} style={{ opacity: 0 }} />
-            <img ref={aRef} className="products__img products__img--a" src={img.images[0]} alt={img.alt} />
-          </div>
+        ? <>
+            <div className="products__img-wrap">
+              <img ref={bRef} className="products__img products__img--b" src={multi ? img.images[1] : img.images[0]} alt={img.alt} style={{ opacity: 0 }} />
+              <img ref={aRef} className="products__img products__img--a" src={img.images[0]} alt={img.alt} />
+              <img className="products__img products__img--mobile" src={img.images[mobileIndex]} alt={img.alt} />
+            </div>
+            {multi && (
+              <div className="carousel-nav">
+                <button className="carousel-btn carousel-prev" onClick={() => setMobileIndex(i => (i - 1 + img.images.length) % img.images.length)}>{'←'}</button>
+                <button className="carousel-btn carousel-next" onClick={() => setMobileIndex(i => (i + 1) % img.images.length)}>{'→'}</button>
+              </div>
+            )}
+          </>
         : <div className="products__img-placeholder" aria-hidden="true" />
       }
       <figcaption className="products__item-caption">
@@ -113,8 +123,11 @@ function Site() {
   const [selectedBrand, setSelectedBrand] = useState(null)
   const [aboutHovered, setAboutHovered] = useState(false)
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('mg_intro_seen'))
+  const [mobileCollapsed, setMobileCollapsed] = useState(false)
   const labelsHeightRef = useRef(0)
   const introRef = useRef(null)
+  const mobileCollapsedRef = useRef(false)
+  const mobileManualRef = useRef(false)
 
   const visibleProducts = selectedBrand
     ? PRODUCT_IMAGES.filter(p => p.brand === selectedBrand)
@@ -129,6 +142,20 @@ function Site() {
   const aboutImgRef = useRef(null)
   const labelsRef = useRef(null)
   const hoverLabelRef = useRef(null)
+
+  function collapseLabels() {
+    if (mobileCollapsedRef.current) return
+    mobileCollapsedRef.current = true
+    setMobileCollapsed(true)
+    gsap.to(labelsRef.current, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
+  }
+
+  function expandLabels() {
+    if (!mobileCollapsedRef.current) return
+    mobileCollapsedRef.current = false
+    setMobileCollapsed(false)
+    gsap.to(labelsRef.current, { height: labelsHeightRef.current, opacity: 1, duration: 0.3, ease: 'power2.out' })
+  }
 
   function changeLabel(text, hovering, fadeInDelay = 0, fadeInDuration = 0.15) {
     const el = hoverLabelRef.current
@@ -187,6 +214,20 @@ function Site() {
     }
   }, [])
 
+  useEffect(() => {
+    function handleScroll() {
+      if (window.innerWidth > 768) return
+      if (window.scrollY > 80) {
+        if (!mobileManualRef.current) collapseLabels()
+      } else {
+        mobileManualRef.current = false
+        expandLabels()
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <main className="site">
 
@@ -218,6 +259,19 @@ function Site() {
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
           </div>
+          <button
+            className="meta__mobile-toggle"
+            aria-label={mobileCollapsed ? 'Expand brands' : 'Collapse brands'}
+            onClick={() => {
+              if (mobileCollapsedRef.current) {
+                mobileManualRef.current = true
+                expandLabels()
+              } else {
+                mobileManualRef.current = false
+                collapseLabels()
+              }
+            }}
+          >{mobileCollapsed ? '+' : '−'}</button>
         </div>
         <div ref={labelsRef} className="products__labels">
           {LABEL_COLS.map((col, ci) => (
