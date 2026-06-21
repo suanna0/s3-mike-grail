@@ -147,6 +147,7 @@ function Site() {
     if (mobileCollapsedRef.current) return
     mobileCollapsedRef.current = true
     setMobileCollapsed(true)
+    gsap.killTweensOf(labelsRef.current)
     gsap.to(labelsRef.current, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
   }
 
@@ -154,7 +155,11 @@ function Site() {
     if (!mobileCollapsedRef.current) return
     mobileCollapsedRef.current = false
     setMobileCollapsed(false)
-    gsap.to(labelsRef.current, { height: labelsHeightRef.current, opacity: 1, duration: 0.3, ease: 'power2.out' })
+    gsap.killTweensOf(labelsRef.current)
+    gsap.to(labelsRef.current, {
+      height: labelsHeightRef.current, opacity: 1, duration: 0.3, ease: 'power2.out',
+      onComplete: () => gsap.set(labelsRef.current, { clearProps: 'height' })
+    })
   }
 
   function changeLabel(text, hovering, fadeInDelay = 0, fadeInDuration = 0.15) {
