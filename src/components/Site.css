@@ -38,7 +38,7 @@
   top: 0;
   z-index: 10;
   background: #efefef;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
 
 /* ── Meta bar ──────────────────────────────────────────── */
@@ -129,8 +129,31 @@
 }
 
 .mike-grail-label:hover,
-.brand-label:hover {
+.brand-label:hover,
+.labels__about:hover {
   text-decoration: underline;
+}
+
+.labels__about,
+.labels__about-img-wrap {
+  display: none;
+}
+
+.labels__about--open {
+  text-decoration: underline;
+}
+
+.about-bio {
+  display: none;
+}
+
+.about-bio__para {
+  text-transform: none;
+  margin-bottom: 8px;
+}
+
+.about-bio__para:last-child {
+  margin-bottom: 0;
 }
 
 .brand-label--selected {
@@ -267,6 +290,38 @@
   .products__labels {
     grid-template-columns: 1fr;
     gap: 0;
+    position: relative;
+  }
+
+  .labels__about {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .labels__about-img-wrap {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background: #ddd;
+  }
+
+  .labels__about-img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+
+  .about-bio {
+    display: block;
+  }
+
+  .about-bio__para:first-child {
+    margin-top: 0.3em;
   }
 
   .products__label-col {
@@ -294,6 +349,7 @@
   .products__item-desc {
     display: block;
     margin-top: 6px;
+    white-space: pre-wrap;
   }
 
   .products__img--a,
@@ -309,7 +365,8 @@
 
   .carousel-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     margin-top: 6px;
   }
 
@@ -319,7 +376,6 @@
     cursor: pointer;
     font-family: inherit;
     font-size: 12px;
-    color: rgba(0, 0, 0, 0.7);
     padding: 0;
   }
 }

@@ -122,6 +122,7 @@ function Site() {
   const [isHovering, setIsHovering] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState(null)
   const [aboutHovered, setAboutHovered] = useState(false)
+  const [aboutOpen, setAboutOpen] = useState(false)
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('mg_intro_seen'))
   const [mobileCollapsed, setMobileCollapsed] = useState(false)
   const labelsHeightRef = useRef(0)
@@ -142,6 +143,9 @@ function Site() {
   const aboutImgRef = useRef(null)
   const labelsRef = useRef(null)
   const hoverLabelRef = useRef(null)
+  const bioRef = useRef(null)
+  const aboutImgMobileRef = useRef(null)
+  const aboutImgMobileWrapRef = useRef(null)
 
   function collapseLabels() {
     if (mobileCollapsedRef.current) return
@@ -149,6 +153,14 @@ function Site() {
     setMobileCollapsed(true)
     gsap.killTweensOf(labelsRef.current)
     gsap.to(labelsRef.current, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
+    gsap.killTweensOf(bioRef.current)
+    gsap.to(bioRef.current, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
+    const cols = labelsRef.current.querySelectorAll('.products__label-col')
+    gsap.to(cols, { opacity: 1, duration: 0.2 })
+    gsap.to(aboutImgMobileRef.current, { opacity: 0, duration: 0.15 })
+    gsap.to(aboutImgMobileWrapRef.current, { width: 28, height: 28, duration: 0.3, ease: 'power2.inOut' })
+    gsap.to(aboutImgMobileWrapRef.current, { opacity: 0, duration: 0.2, delay: 0.15 })
+    setAboutOpen(false)
   }
 
   function expandLabels() {
@@ -160,6 +172,32 @@ function Site() {
       height: labelsHeightRef.current, opacity: 1, duration: 0.3, ease: 'power2.out',
       onComplete: () => gsap.set(labelsRef.current, { clearProps: 'height' })
     })
+  }
+
+  function toggleAbout() {
+    const el = bioRef.current
+    const cols = labelsRef.current.querySelectorAll('.products__label-col')
+    const img = aboutImgMobileRef.current
+    const wrap = aboutImgMobileWrapRef.current
+    if (aboutOpen) {
+      gsap.to(el, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
+      gsap.to(img, { opacity: 0, duration: 0.15 })
+      gsap.to(wrap, { width: 28, height: 28, duration: 0.4, ease: 'power2.inOut' })
+      gsap.to(wrap, { opacity: 0, duration: 0.25, delay: 0.2 })
+      gsap.to(cols, { opacity: 1, duration: 0.25, delay: 0.15 })
+      setAboutOpen(false)
+    } else {
+      const targetHeight = labelsRef.current.offsetHeight
+      const targetWidth = img.naturalWidth && img.naturalHeight
+        ? Math.round(targetHeight * img.naturalWidth / img.naturalHeight)
+        : targetHeight
+      gsap.to(cols, { opacity: 0, duration: 0.25 })
+      gsap.set(wrap, { width: 28, height: 28, opacity: 1 })
+      gsap.to(wrap, { width: targetWidth, height: targetHeight, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+      gsap.to(img, { opacity: 1, duration: 0.2, delay: 0.25 })
+      gsap.to(el, { height: 'auto', opacity: 1, duration: 0.3, ease: 'power2.inOut' })
+      setAboutOpen(true)
+    }
   }
 
   function changeLabel(text, hovering, fadeInDelay = 0, fadeInDuration = 0.15) {
@@ -289,6 +327,24 @@ function Site() {
                 >{brand}{selectedBrand === brand ? ` (${BRAND_COUNTS[brand] ?? 0})` : ''}</p>
               ))}
             </div>
+          ))}
+          <div ref={aboutImgMobileWrapRef} className="labels__about-img-wrap" style={{ width: 28, height: 28, opacity: 0 }}>
+            <img
+              ref={aboutImgMobileRef}
+              src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/about.jpg"
+              alt=""
+              className="labels__about-img"
+              style={{ opacity: 0 }}
+            />
+          </div>
+          <p
+            className={`labels__about${aboutOpen ? ' labels__about--open' : ''}`}
+            onClick={toggleAbout}
+          >ABOUT</p>
+        </div>
+        <div ref={bioRef} className="about-bio" style={{ height: 0, opacity: 0, overflow: 'hidden' }}>
+          {ABOUT_TEXT.split('\n\n').map((para, i) => (
+            <p key={i} className="about-bio__para">{para}</p>
           ))}
         </div>
       </div>
