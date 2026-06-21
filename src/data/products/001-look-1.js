@@ -9,4 +9,3 @@ export default {
   brand: 'Buzz Rickson',
   caption: ``,
 }
-// Comme des Garçons SHIRT Grey Plaid Reversible Shirt

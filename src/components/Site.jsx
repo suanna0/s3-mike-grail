@@ -99,6 +99,10 @@ function ProductItem({ img, gridColumn, onMouseEnter, onMouseLeave }) {
           </div>
         : <div className="products__img-placeholder" aria-hidden="true" />
       }
+      <figcaption className="products__item-caption">
+        <span className="products__item-name">{img.name}</span>
+        {img.caption && <span className="products__item-desc">{img.caption}</span>}
+      </figcaption>
     </figure>
   )
 }

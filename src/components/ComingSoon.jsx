@@ -1,7 +1,7 @@
 import { useScramble } from '../hooks/useScramble'
 import './ComingSoon.css'
 
-const BG_IMAGE = 'https://de1wwae7728z6.cloudfront.net/images/mike-grail/shoe.jpg'
+const BG_IMAGE = 'https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/coming_soon_background.jpg'
 
 function ComingSoon() {
   const { displayText, textRef } = useScramble('COMING SOON')
