@@ -260,12 +260,7 @@ function Site() {
   useEffect(() => {
     function handleScroll() {
       if (window.innerWidth > 768) return
-      if (window.scrollY > 80) {
-        if (!mobileManualRef.current) collapseLabels()
-      } else {
-        mobileManualRef.current = false
-        expandLabels()
-      }
+      if (window.scrollY > 80 && !mobileManualRef.current) collapseLabels()
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
