@@ -328,6 +328,10 @@
     grid-column: 1;
   }
 
+  .brand-label {
+    width: fit-content;
+  }
+
   .products__grid {
     grid-template-columns: 1fr;
   }

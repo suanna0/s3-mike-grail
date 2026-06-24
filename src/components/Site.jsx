@@ -158,8 +158,8 @@ function Site() {
     const cols = labelsRef.current.querySelectorAll('.products__label-col')
     gsap.to(cols, { opacity: 1, duration: 0.2 })
     gsap.to(aboutImgMobileRef.current, { opacity: 0, duration: 0.15 })
-    gsap.to(aboutImgMobileWrapRef.current, { width: 28, height: 28, duration: 0.3, ease: 'power2.inOut' })
-    gsap.to(aboutImgMobileWrapRef.current, { opacity: 0, duration: 0.2, delay: 0.15 })
+    gsap.to(aboutImgMobileWrapRef.current, { width: 28, height: 28, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+    gsap.to(aboutImgMobileWrapRef.current, { opacity: 0, duration: 0.15, delay: 0.5 })
     setAboutOpen(false)
   }
 
@@ -180,11 +180,11 @@ function Site() {
     const img = aboutImgMobileRef.current
     const wrap = aboutImgMobileWrapRef.current
     if (aboutOpen) {
-      gsap.to(el, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
       gsap.to(img, { opacity: 0, duration: 0.15 })
-      gsap.to(wrap, { width: 28, height: 28, duration: 0.4, ease: 'power2.inOut' })
-      gsap.to(wrap, { opacity: 0, duration: 0.25, delay: 0.2 })
-      gsap.to(cols, { opacity: 1, duration: 0.25, delay: 0.15 })
+      gsap.to(wrap, { width: 28, height: 28, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+      gsap.to(wrap, { opacity: 0, duration: 0.15, delay: 0.5 })
+      gsap.to(cols, { opacity: 1, duration: 0.25, delay: 0.5 })
+      gsap.to(el, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.inOut' })
       setAboutOpen(false)
     } else {
       const targetHeight = labelsRef.current.offsetHeight
@@ -242,8 +242,8 @@ function Site() {
 
     function onLeave() {
       gsap.to(aboutImgRef.current, { opacity: 0, duration: 0.2, ease: 'none' })
-      gsap.to(btn, { width: 28, height: 28, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
-      gsap.to(labels, { height: labelsHeightRef.current, duration: 0.4, delay: 0.1, ease: 'power2.inOut' })
+      gsap.to(btn, { width: 28, height: 28, duration: 0.4, delay: 0.1, ease: 'power2.inOut', onComplete: () => gsap.set(btn, { clearProps: 'width,height' }) })
+      gsap.to(labels, { height: labelsHeightRef.current, duration: 0.4, delay: 0.1, ease: 'power2.inOut', onComplete: () => gsap.set(labels, { clearProps: 'height' }) })
       gsap.to(label, { opacity: 1, duration: 0.25, delay: 0.35, ease: 'none' })
       gsap.to(labels, { opacity: 1, duration: 0.25, delay: 0.35, ease: 'none' })
     }
@@ -323,7 +323,7 @@ function Site() {
                 <p
                   key={brand}
                   className={selectedBrand === brand ? 'brand-label brand-label--selected' : selectedBrand ? 'brand-label brand-label--dim' : 'brand-label'}
-                  onClick={() => toggleBrand(brand)}
+                  onClick={() => { if (!aboutOpen) toggleBrand(brand) }}
                 >{brand}{selectedBrand === brand ? ` (${BRAND_COUNTS[brand] ?? 0})` : ''}</p>
               ))}
             </div>
