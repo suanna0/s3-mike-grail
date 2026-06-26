@@ -1,7 +1,7 @@
 import ComingSoon from './components/ComingSoon'
 import Site from './components/Site'
 
-const LAUNCH_DATE = new Date('2026-07-01T00:00:00')
+const LAUNCH_DATE = new Date('2026-07-06T17:00:00Z')
 
 function App() {
   const isLaunched = new Date() >= LAUNCH_DATE
