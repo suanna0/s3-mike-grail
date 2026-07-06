@@ -7,7 +7,9 @@ import './Site.css'
 import LABELS from '../data/labels'
 import PRODUCT_IMAGES from '../data/products/index.js'
 
-const ABOUT_TEXT = `Season 3 of Mike Grail is unofficially dubbed by me as “Work Wear.” All the pieces featured I wear or have worn to work either regularly or a handful of times. Workwear is generally used to describe clothing worn for manual labor that is designed to withstand strenuous physical activity and provide durability and protection. Workwear, as it pertains to actual workwear items, has gained visibility in casual fashion in recent years, with the rise in popularity of Carhartt, Dickies, Ben Davis, Levi’s etc. Clothing from these brands are worn by all sorts of people for occasions that don’t involve manual labor (i.e. going to a coffee shop, going vintage shopping) and instead are worn purely to signal their knowledge of and buy-in of this trend. 
+const ABOUT_TEXT = `About 
+
+Season 3 of Mike Grail is unofficially dubbed by me as “Work Wear.” All the pieces featured I wear or have worn to work either regularly or a handful of times. Workwear is generally used to describe clothing worn for manual labor that is designed to withstand strenuous physical activity and provide durability and protection. Workwear, as it pertains to actual workwear items, has gained visibility in casual fashion in recent years, with the rise in popularity of Carhartt, Dickies, Ben Davis, Levi’s etc. Clothing from these brands are worn by all sorts of people for occasions that don’t involve manual labor (i.e. going to a coffee shop, going vintage shopping) and instead are worn purely to signal their knowledge of and buy-in of this trend. 
 
 Like those clothing items that are worn on the bodies of 20 something year olds who are not blue collar workers, the pieces I have compiled for season 3 are also the exact opposite in nature to actual workwear. They are not suitable for performing physical labor or rugged enough to withstand the elements. Instead they are sometimes precarious in nature, white, and prioritize form over function. However the same purpose and intention from which these pieces are made is present. For one, they clothe me at work. And two, they are meant to stay with me for a lifetime, crafted and purchased as pieces that are not disposable, but meant to outlast trend cycles and be worn for years to come.`
 
@@ -119,6 +121,8 @@ function Site() {
   const [hoverLabel, setHoverLabel] = useState('Hover on images')
   const [isHovering, setIsHovering] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState(null)
+  const gridRef = useRef(null)
+  const pendingBrandRef = useRef(null)
   const [aboutHovered, setAboutHovered] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('mg_intro_seen'))
@@ -133,7 +137,15 @@ function Site() {
     : PRODUCT_IMAGES
 
   function toggleBrand(brand) {
-    setSelectedBrand(prev => prev === brand ? null : brand)
+    const next = selectedBrand === brand ? null : brand
+    pendingBrandRef.current = next
+    gsap.to(gridRef.current, {
+      opacity: 0, duration: 0.2, ease: 'none',
+      onComplete: () => {
+        setSelectedBrand(pendingBrandRef.current)
+        gsap.to(gridRef.current, { opacity: 1, duration: 0.3, ease: 'none' })
+      }
+    })
   }
 
   const aboutRef = useRef(null)
@@ -290,7 +302,7 @@ function Site() {
       {/* ── Meta bar + Labels (sticky together) ─────── */}
       <div className="sticky-header">
         <div className="meta">
-          <span className="caption mike-grail-label" onClick={() => setSelectedBrand(null)}>MIKE GRAIL</span>
+          <span className="caption mike-grail-label" onClick={() => { if (selectedBrand !== null) toggleBrand(selectedBrand) }}>MIKE GRAIL</span>
           <button ref={aboutRef} className="meta__about" aria-label="About" onMouseEnter={() => { setAboutHovered(true); changeLabel(ABOUT_TEXT, true, 0.4, 0.25) }} onMouseLeave={() => changeLabel('Hover on images', false)}><span ref={aboutLabelRef} className={aboutHovered ? 'about-label--gone' : ''}>?</span><img ref={aboutImgRef} src="https://de1wwae7728z6.cloudfront.net/images/mike-grail/s3/about.jpg" alt="" className="meta__about-img" style={{ opacity: 0 }} /></button>
           <div className="meta__hover-label">
             <span ref={hoverLabelRef} className={isHovering ? '' : 'caption'}>{hoverLabel}</span>
@@ -343,7 +355,7 @@ function Site() {
       </div>
 
       {/* ── Product image grid ────────────────────── */}
-      <div className="products__grid">
+      <div ref={gridRef} className="products__grid">
         {(() => {
           let col = 0
           return visibleProducts.map((img, i) => {
