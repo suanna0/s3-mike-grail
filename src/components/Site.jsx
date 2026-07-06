@@ -7,11 +7,9 @@ import './Site.css'
 import LABELS from '../data/labels'
 import PRODUCT_IMAGES from '../data/products/index.js'
 
-const ABOUT_TEXT = `Hi, I'm Michael.
+const ABOUT_TEXT = `Season 3 of Mike Grail is unofficially dubbed by me as “Work Wear.” All the pieces featured I wear or have worn to work either regularly or a handful of times. Workwear is generally used to describe clothing worn for manual labor that is designed to withstand strenuous physical activity and provide durability and protection. Workwear, as it pertains to actual workwear items, has gained visibility in casual fashion in recent years, with the rise in popularity of Carhartt, Dickies, Ben Davis, Levi’s etc. Clothing from these brands are worn by all sorts of people for occasions that don’t involve manual labor (i.e. going to a coffee shop, going vintage shopping) and instead are worn purely to signal their knowledge of and buy-in of this trend. 
 
-I have always had an eye for beautiful things - whether they be incredible moments of design history, laboriously handcrafted garments, extraordinary natural phenomena, or just plain everyday objects.
-
-In a world of fast moving trends and overconsumption, I am working to be more intentional about what I collect, investing in lifelong pieces that I know I will cherish forever. Updating this website periodically not only is a small nod to this shift in attitude but also serves as a way to look back on the stories each piece holds.`
+Like those clothing items that are worn on the bodies of 20 something year olds who are not blue collar workers, the pieces I have compiled for season 3 are also the exact opposite in nature to actual workwear. They are not suitable for performing physical labor or rugged enough to withstand the elements. Instead they are sometimes precarious in nature, white, and prioritize form over function. However the same purpose and intention from which these pieces are made is present. For one, they clothe me at work. And two, they are meant to stay with me for a lifetime, crafted and purchased as pieces that are not disposable, but meant to outlast trend cycles and be worn for years to come.`
 
 const COL_SIZE = 3
 const LABEL_COLS = (() => {
